@@ -1,6 +1,11 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+
+var http = require('http');
+var socketio = require('socket.io');
+var express = require('express');
+
+var router = express();
+var server = http.createServer(router);
+var io = socketio.listen(server);
 
 var data = [];
 
@@ -17,7 +22,7 @@ function generateRandomData() {
 //     console.log();
 // }, 5000);
 
-app.get('/', function(req, res){
+router.get('/', function(req, res){
   res.sendfile('./index.html');    
 }); 
 
@@ -40,8 +45,8 @@ io.on('connection', function(socket){
 
 });
 
-http.listen(process.env.PORT || 8000, process.env.IP || "0.0.0.0", function () {
-    var addr = http.address();
+server.listen(process.env.PORT || 8000, process.env.IP || "0.0.0.0", function () {
+    var addr = server.address();
     console.log("Server listening at", addr.address + ":" + addr.port);
 });
 
