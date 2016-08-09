@@ -1,11 +1,25 @@
 
-var http = require('http');
-var socketio = require('socket.io');
-var express = require('express');
 
-var router = express();
-var server = http.createServer(router);
-var io = socketio.listen(server);
+// var express = require('express');
+// var app = express();
+// var server = require('http').createServer(app);
+// var io = require('../..')(server);
+
+
+// var http = require('http');
+// var socketio = require('socket.io');
+// var express = require('express');
+
+// var router = express();
+// var server = http.createServer(router);
+// var io = socketio.listen(server);
+
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+// var io = require('../..')(server);
+// New:
+var io = require('socket.io')(server);
 
 var data = [];
 
@@ -22,7 +36,7 @@ function generateRandomData() {
 //     console.log();
 // }, 5000);
 
-router.get('/', function(req, res){
+app.get('/', function(req, res){
   res.sendfile('./index.html');    
 }); 
 
